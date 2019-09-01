@@ -30,21 +30,27 @@ func NewService() Service {
 
 func (s *service) GetGraphModel() *tf.Graph {
 	if graphModel == nil {
-		LoadModel()
+		if err := LoadModel(); err != nil {
+			panic(err)
+		}
 	}
 	return graphModel
 }
 
 func (s *service) GetSessionModel() *tf.Session {
 	if sessionModel == nil {
-		LoadModel()
+		if err := LoadModel(); err != nil {
+			panic(err)
+		}
 	}
 	return sessionModel
 }
 
 func (s *service) GetLabels() []string {
 	if len(labels) == 0 {
-		LoadModel()
+		if err := LoadModel(); err != nil {
+			panic(err)
+		}
 	}
 	return labels
 }

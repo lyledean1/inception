@@ -27,7 +27,11 @@ func (ctrl *ImageController) PredictLabelFromImage(c *gin.Context) {
 	imageName := strings.Split(header.Filename, ".")[:1][0]
 	defer imageFile.Close()
 	var imageBuffer bytes.Buffer
-	io.Copy(&imageBuffer, imageFile)
+	_, err = io.Copy(&imageBuffer, imageFile)
+	if err != nil {
+		c.JSON(400, nil )
+		return
+	}
 	cmd, err := ctrl.service.ProcessImageWithLabelPredictions(imageName, imageBuffer)
 	if err != nil {
 		c.JSON(400, nil )

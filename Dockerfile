@@ -48,7 +48,7 @@ WORKDIR "/go/src/github.com/lyledean1/inception/"
 
 COPY . .
 
-RUN go build -o tfgo ./cmd/main.go
+RUN go build GOOS=linux GOARCH=arm GOARM=5 -o tfgo ./cmd/main.go
 
 
 CMD [ "./tfgo" ]
